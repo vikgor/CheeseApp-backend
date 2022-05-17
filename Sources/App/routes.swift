@@ -3,12 +3,12 @@ import Vapor
 
 func routes(_ app: Application) throws {
     app.get { req in
-        return "It works!"
+        return "Welcome to CheeseApp - the cheesiest database of cheese"
     }
 
-    app.get("hello") { req -> String in
-        return "Hello, world!"
+    app.get("cheese") { req -> String in
+        return "I love cheese!"
     }
 
-    try app.register(collection: TodoController())
+    try app.register(collection: CheeseController())
 }
