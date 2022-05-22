@@ -9,6 +9,7 @@ Comes with persistent storage and CRUD API:
 | /api/cheeses/random | GET | Get random cheese item from the database |
 | /api/cheeses/:cheeseID | PUT | Update cheese item |
 | /api/cheeses/:cheeseID | DELETE | Delete cheese item |
+
 For more information on Vapor check out the [documentation](https://docs.vapor.codes)
 ## Requirements
 Swift 5.5, Vapor 4, Xcode 13.3
