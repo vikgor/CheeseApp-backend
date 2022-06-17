@@ -8,7 +8,7 @@ final class Cheese: Model, Content {
     var id: UUID?
 
     @Field(key: "name")
-    var name: String
+    var name: String?
 
     @Field(key: "country")
     var country: String?
@@ -23,7 +23,7 @@ final class Cheese: Model, Content {
 
     init(
         id: UUID? = nil,
-        name: String,
+        name: String? = nil,
         country: String? = nil,
         type: String? = nil,
         animal: String? = nil

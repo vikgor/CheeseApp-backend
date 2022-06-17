@@ -38,27 +38,25 @@ struct CheeseController: RouteCollection {
         return cheese
     }
 
-    // TODO: - Update handler to async/await
-    func updateHandler(_ req: Request) throws -> EventLoopFuture<Cheese> {
-        let updatedCheese = try req.content.decode(CreateCheeseData.self)
-        return Cheese.find(req.parameters.get("cheeseID"), on: req.db)
-            .unwrap(or: Abort(.notFound))
-            .flatMap { cheese in
-                cheese.name = updatedCheese.name
-                cheese.country = updatedCheese.country
-                cheese.type = updatedCheese.type
-                cheese.animal = updatedCheese.animal
-                return cheese.save(on: req.db).map { cheese }
-            }
-    }
-
-
     func deleteHandler(req: Request) async throws -> HTTPStatus {
         guard let cheese = try await Cheese.find(req.parameters.get("cheeseID"), on: req.db) else {
             throw Abort(.notFound)
         }
         try await cheese.delete(on: req.db)
         return .ok
+    }
+
+    func updateHandler(req: Request) async throws -> Cheese {
+        let updatedCheese = try req.content.decode(CreateCheeseData.self)
+        guard let cheese = try await Cheese.find(req.parameters.get("cheeseID"), on: req.db) else {
+            throw Abort(.notFound)
+        }
+        cheese.name = updatedCheese.name
+        cheese.country = updatedCheese.country
+        cheese.type = updatedCheese.type
+        cheese.animal = updatedCheese.animal
+        try await cheese.update(on: req.db)
+        return cheese
     }
 }
 
